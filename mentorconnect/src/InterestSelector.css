@@ -1,0 +1,60 @@
+
+.interest-container {
+  background-color: #f5f3f5; 
+  padding: 20px;
+  border-radius: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 600px;
+}
+
+.interest-header {
+
+  color: #30034c;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+.chip {
+  background-color: transparent;
+  color: #6b2674;
+  border: 1px solid #5f6368;
+  border-radius: 20px; 
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+
+.chip:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+
+.chip.selected {
+  background-color: #c2e7ff; 
+  color: #001d35; 
+  border: 1px solid #c2e7ff;
+}
+
+
+.chip.selected:hover {
+  background-color: #a8d5fc;
+}
+
+.form-dropdown {
+  background-color: white; 
+  color: black;            
+
+}

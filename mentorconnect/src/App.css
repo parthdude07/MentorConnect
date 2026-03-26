@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  
+  background-image: url('./assets/bg.png');
+  background-position: center;
+  background-size: cover;
+  color: #e8e8e8;
+  opacity: 0.70;
+  padding:20px;
+  font-family: 'Segoe UI', sans-serif;
+  animation: breathe 15s infinite alternate ease-in-out;
+}
+
+@keyframes breathe {
+  0% {
+    background-size: 100%;
+  }
+  100% {
+    background-size: 105%; 
+  }
+}
+
+.form .form-title{
+  font-size: 26px;
+  padding-bottom: 20px;
+  font-weight: 700;
+  color: #8d28a6;
+  
+}
+#center {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  
+  background : transparent;
+  padding: 48px 40px;
+  border-radius: 16px;
+  width: 420px;
+  outline: none;
+  border: 2px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(30px);
+}
+
+.form-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: #888888;
+  margin-bottom: 32px;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+ 
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #30034c;
+  margin-bottom: 6px;
+}
+
+input {
+  
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 11px 14px;
+  color: #0b0b0b;
+  background-color:  rgba(223, 216, 216, 0.5);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #00b8a9;
+}
+
+input::placeholder {
+  color: #30034c;
+}
+.remember-me label {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  cursor: pointer; 
+}
+.remember-me {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  color: #666666;
+  font-size: 13px; 
+  margin-bottom: 20px; 
+}
+
+
+.remember-me a {
+  color: #9358be; 
+  text-decoration: none; 
+  font-weight: 500;
+}
+
+.form .remember-me a:hover {
+  text-decoration: underline; 
+}
+
+.button {
+  width: 100%;
+  padding: 12px;
+  background-color: #9358be;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+}
+
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+
+.role-tile {
+  background-color: #f1d2ea; 
+  border: 1px solid #e0e0e0; 
+  border-radius: 8px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease; 
+}
+
+
+.role-tile:hover {
+  border-color: #ef08db; 
+  background-color: #dbc0ce; 
+  transform: translateY(-2px); 
+}
+
+
+.role-tile .tile-title {
+  color: #333333;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.role-tile .tile-desc {
+  color: #888888;
+  font-size: 12px;
+}
+
+
