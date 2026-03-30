@@ -11,15 +11,17 @@ interface ProfileFormProps {
 export default function ProfileForm({ role, onBack }: ProfileFormProps) {
   const [department, setDepartment] = useState("CSE");
   const [year, setYear] = useState("1");
-  const [interests, setInterests] = useState(["Career guidance"]);
-  const [languages, setLanguages] = useState("1");
+  const [interests, setInterests] = useState<string[]>(["Career guidance"]);
+  const [languages, setLanguages] = useState<string[]>(["English"]);
+  const [academicBackground, setAcademicBackground] = useState("PCM");
+  const [preferredDomains, setPreferredDomains] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const formData = { role, department, year, interests, languages };
+    const formData = { role, department, year, interests, languages, academicBackground, preferredDomains };
     console.log("Profile submitted:", formData);
     // TODO: save profile to Supabase
     setTimeout(() => {
@@ -92,16 +94,36 @@ export default function ProfileForm({ role, onBack }: ProfileFormProps) {
 
         <div className="form-row">
           <div className="form-group">
-            <label className="label">Preferred language(s)</label>
+            <label className="label">Academic Background</label>
             <select
               className="form-control"
-              value={languages}
-              onChange={(e) => setLanguages(e.target.value)}
+              value={academicBackground}
+              onChange={(e) => setAcademicBackground(e.target.value)}
             >
-              <option value="1">English</option>
-              <option value="2">Hindi</option>
-              <option value="3">Telugu</option>
-              <option value="4">Tamil</option>
+              <option value="PCM">PCM</option>
+              <option value="PCB">PCB</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Arts">Arts</option>
+              <option value="Diploma">Diploma</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="label">Preferred language(s) (Hold Ctrl/Cmd to select multiple)</label>
+            <select
+              multiple
+              className="form-control"
+              value={languages}
+              onChange={(e) => {
+                const selected = Array.from(e.target.selectedOptions, option => option.value);
+                setLanguages(selected);
+              }}
+              style={{ minHeight: "100px" }}
+            >
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Tamil">Tamil</option>
             </select>
           </div>
           <div className="form-group" />
@@ -130,6 +152,16 @@ export default function ProfileForm({ role, onBack }: ProfileFormProps) {
             <div className="form-group">
               <label className="label">Mentor background preference</label>
               <input type="text" className="form-control" placeholder="E.g., Frontend Developer" />
+            </div>
+            <div className="form-group">
+              <label className="label">Domains you need help with</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="E.g., Web Dev, Mental Health" 
+                value={preferredDomains}
+                onChange={(e) => setPreferredDomains(e.target.value)}
+              />
             </div>
             <div className="form-group">
               <label className="label">Communication preference</label>

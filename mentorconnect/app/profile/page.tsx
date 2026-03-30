@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { User, Mail, Building2, GraduationCap, Shield, Calendar } from "lucide-react";
+import { TriggerMatchingButton } from "@/components/trigger-matching-button";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -65,6 +66,8 @@ export default async function ProfilePage() {
   return (
     <div className="container mx-auto py-8 max-w-3xl space-y-6">
       <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
+
+      <TriggerMatchingButton userId={user.id} />
 
       {/* User Info Card */}
       <Card>
