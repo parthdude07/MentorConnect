@@ -32,7 +32,7 @@ export function SignUpOnboarding() {
         {step === 1 && (
           <motion.div
             key="step1"
-            className="form"
+            className="w-full max-w-sm"
             variants={pageVariants}
             initial="hidden"
             animate="visible"
@@ -56,7 +56,7 @@ export function SignUpOnboarding() {
           >
             <div
               onClick={() => setStep(1)}
-              style={{ cursor: "pointer", color: "#aaaaaa", fontSize: "14px", marginBottom: "20px" }}
+              className="mb-5 cursor-pointer text-sm text-muted-foreground hover:text-foreground"
             >
               &lt; Back
             </div>

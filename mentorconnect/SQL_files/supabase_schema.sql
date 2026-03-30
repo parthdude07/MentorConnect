@@ -523,6 +523,55 @@ CREATE TRIGGER trg_comments_updated       BEFORE UPDATE ON issue_comments  FOR E
 CREATE TRIGGER trg_mentor_groups_updated  BEFORE UPDATE ON mentor_groups   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 -- ============================================================
+-- SECTION 11A: AUTH -> APP USER SYNC TRIGGER
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION public.handle_new_auth_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    INSERT INTO public.users (
+        id,
+        email,
+        password_hash,
+        is_email_verified,
+        status,
+        onboarding_status,
+        last_login_at
+    )
+    VALUES (
+        NEW.id,
+        NEW.email,
+        'managed_by_supabase_auth',
+        NEW.email_confirmed_at IS NOT NULL,
+        CASE
+            WHEN NEW.email_confirmed_at IS NOT NULL THEN 'active'::user_status
+            ELSE 'pending_verification'::user_status
+        END,
+        'not_started'::onboarding_status,
+        NOW()
+    )
+    ON CONFLICT (id) DO UPDATE SET
+        email = EXCLUDED.email,
+        is_email_verified = EXCLUDED.is_email_verified,
+        status = EXCLUDED.status,
+        last_login_at = EXCLUDED.last_login_at,
+        updated_at = NOW();
+
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+AFTER INSERT ON auth.users
+FOR EACH ROW
+EXECUTE FUNCTION public.handle_new_auth_user();
+
+-- ============================================================
 -- SECTION 12: MENTOR STATS REFRESH FUNCTION
 -- (Call via a scheduled job or after rating/resolution events)
 -- ============================================================

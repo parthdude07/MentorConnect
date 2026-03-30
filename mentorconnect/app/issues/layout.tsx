@@ -2,7 +2,7 @@ import { AppShell } from "@/components/workspace/app-shell";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-export default async function ProtectedLayout({
+export default async function IssuesLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -16,10 +16,5 @@ export default async function ProtectedLayout({
     redirect("/auth/login");
   }
 
-  return (
-    <AppShell userEmail={user.email} showAdmin>
-      {children}
-    </AppShell>
-  );
+  return <AppShell userEmail={user.email}>{children}</AppShell>;
 }
-
