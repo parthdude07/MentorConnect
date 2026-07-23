@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { validateContent } from "@/lib/content-filter";
 import {
   Card,
   CardContent,
@@ -40,6 +41,20 @@ export function IssueForm() {
     const formData = new FormData(form);
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
+
+    const titleValidation = validateContent(title);
+    if (!titleValidation.isValid) {
+      setError("Your title contains restricted words. Please revise.");
+      setLoading(false);
+      return;
+    }
+
+    const descValidation = validateContent(description);
+    if (!descValidation.isValid) {
+      setError("Your description contains restricted words. Please revise.");
+      setLoading(false);
+      return;
+    }
 
     const {
       data: { user },

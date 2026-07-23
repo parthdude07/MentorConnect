@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, ThumbsUp, Lock } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { validateContent } from "@/lib/content-filter";
 
 interface Comment {
   id: string;
@@ -23,6 +24,7 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
   const [newComment, setNewComment] = useState("");
   const [isInternalNote, setIsInternalNote] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [reactionCounts, setReactionCounts] = useState<Record<string, { like: number; support: number }>>({});
 
   const fetchComments = useCallback(async () => {
@@ -60,6 +62,13 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!newComment.trim()) return;
+    
+    setError(null);
+    const commentValidation = validateContent(newComment);
+    if (!commentValidation.isValid) {
+      setError("Your comment contains restricted words. Please revise.");
+      return;
+    }
 
     setLoading(true);
     const {
@@ -147,6 +156,7 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
               className="min-h-[80px]"
               disabled={loading}
             />
+            {error && <p className="text-sm text-red-500">{error}</p>}
             
             {isAdmin && (
               <div className="flex items-center space-x-2">
