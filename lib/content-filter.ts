@@ -4,9 +4,26 @@ const filter = new Filter();
 
 // You can add your "unofficial words" here
 const customBadWords: string[] = [
-  // Examples:
-  // "slang1",
-  // "slang2"
+
+  "bhenchod",
+  "madarchod",
+  "chutiya",
+  "gandu",
+  "bhosdike",
+  "bhosada",
+  "harami",
+  "kamina",
+  "saala",
+  "kutta",
+  "randi",
+  "raand",
+  "bhadwa",
+  "lodu",
+  "lund",
+  "choot",
+  "chu",
+  "gaand",
+  "gand",
 ];
 
 // Add custom words to the filter
@@ -21,10 +38,10 @@ if (customBadWords.length > 0) {
  */
 export function validateContent(text: string): { isValid: boolean; cleanText: string } {
   if (!text) return { isValid: true, cleanText: "" };
-  
+
   const isProfane = filter.isProfane(text);
   const cleanText = filter.clean(text);
-  
+
   return {
     isValid: !isProfane,
     cleanText
