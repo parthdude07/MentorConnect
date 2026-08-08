@@ -66,6 +66,14 @@ export function IssueForm() {
       return;
     }
 
+    // Ensure user exists in public.users to prevent foreign key constraint violations
+    await supabase.from("users").upsert({
+      id: user.id,
+      email: user.email,
+      password_hash: "managed_by_supabase_auth",
+    }, { onConflict: "id", ignoreDuplicates: true });
+
+
     let categoryId: number | null = null;
 
     const { data: category } = await supabase
