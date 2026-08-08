@@ -18,6 +18,7 @@ export interface Issue {
   issue_categories?: { name: string } | null;
   score: number;
   userVote: 1 | -1 | null;
+  issue_comments?: { count: number }[] | { count: number };
 }
 
 export function IssueCard({ issue }: { issue: Issue }) {
@@ -54,7 +55,7 @@ export function IssueCard({ issue }: { issue: Issue }) {
               initialUserVote={issue.userVote} 
             />
             <span className="text-muted-foreground flex items-center gap-1">
-              💬 3
+              💬 {Array.isArray(issue.issue_comments) ? issue.issue_comments[0]?.count || 0 : (issue.issue_comments as any)?.count || 0}
             </span>
           </div>
         </div>

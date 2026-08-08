@@ -32,7 +32,7 @@ export default async function IssuesPage(props: {
 
   let query = supabase
     .from("issues")
-    .select("id, title, description, status, created_at, visibility, issue_categories(name), score");
+    .select("id, title, description, status, created_at, visibility, issue_categories(name), score, issue_comments(count)");
 
   // State filter (open/closed)
   if (state === "closed") {

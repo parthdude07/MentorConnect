@@ -18,6 +18,11 @@ interface Comment {
   is_internal_note: boolean;
 }
 
+/** Extract username from email (part before @) */
+function getUsernameFromEmail(email: string): string {
+  return email.split("@")[0] || email;
+}
+
 export function CommentSection({ issueId, isAdmin = false }: { issueId: string, isAdmin?: boolean }) {
   const supabase = createClient();
   const [comments, setComments] = useState<Comment[]>([]);
@@ -26,6 +31,7 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reactionCounts, setReactionCounts] = useState<Record<string, { like: number; support: number }>>({});
+  const [authorNames, setAuthorNames] = useState<Record<string, string>>({});
 
   const fetchComments = useCallback(async () => {
     const { data } = await supabase
@@ -41,6 +47,23 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
         initialReactions[comment.id] = { like: 0, support: 0 };
       });
       setReactionCounts(initialReactions);
+
+      // Fetch author emails for all unique author IDs
+      const uniqueAuthorIds = [...new Set(data.map((c) => c.author_id))];
+      if (uniqueAuthorIds.length > 0) {
+        const { data: users } = await supabase
+          .from("users")
+          .select("id, email")
+          .in("id", uniqueAuthorIds);
+
+        if (users) {
+          const nameMap: Record<string, string> = {};
+          users.forEach((u: { id: string; email: string }) => {
+            nameMap[u.id] = getUsernameFromEmail(u.email);
+          });
+          setAuthorNames(nameMap);
+        }
+      }
     }
   }, [issueId, supabase]);
 
@@ -112,7 +135,7 @@ export function CommentSection({ issueId, isAdmin = false }: { issueId: string, 
               >
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="secondary" className="text-[10px]">
-                    {comment.author_id.slice(0, 1) < "8" ? "Mentor" : "Mentee"}
+                    {authorNames[comment.author_id] || comment.author_id.slice(0, 8)}
                   </Badge>
                   {comment.is_internal_note && (
                     <Badge variant="outline" className="text-[10px] bg-amber-100 text-amber-800 hover:bg-amber-100 border-amber-300 dark:bg-amber-900 dark:text-amber-300 dark:border-amber-800">
