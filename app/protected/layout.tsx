@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/workspace/app-shell";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { AiAssistant } from "@/components/chat/AiAssistant";
 
 const HIGHEST_ADMIN_ROLE_ID = 7;
 
@@ -29,6 +30,7 @@ export default async function ProtectedLayout({
   return (
     <AppShell userEmail={user.email} showAdmin={Boolean(highestRole)}>
       {children}
+      <AiAssistant />
     </AppShell>
   );
 }
