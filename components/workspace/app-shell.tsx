@@ -32,6 +32,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AiAssistant } from "@/components/chat/AiAssistant";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -243,7 +244,6 @@ export function AppShell({ children, userEmail, showAdmin = true }: AppShellProp
           <div className="sticky top-[72px] space-y-4 rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-sky-50 p-4 shadow-sm dark:from-blue-950/40 dark:to-slate-900/40 dark:border-blue-900/30">
             <div className="flex items-center justify-between">
               <h2 className="font-mono text-sm font-semibold">AI Assistant</h2>
-              <Badge variant="secondary">Beta</Badge>
             </div>
             <p className="text-sm text-muted-foreground">
               Chat support for issue summaries, mentoring prompts, and mental wellness suggestions.
@@ -263,6 +263,7 @@ export function AppShell({ children, userEmail, showAdmin = true }: AppShellProp
           </div>
         </aside>
       </div>
+      <AiAssistant />
     </div>
   );
 }

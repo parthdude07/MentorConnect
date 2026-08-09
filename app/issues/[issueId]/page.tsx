@@ -4,7 +4,42 @@ import { CommentSection } from "../components/CommentSection";
 import { ResolveIssueDialog } from "../components/ResolveIssueDialog";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, User, EyeOff } from "lucide-react";
+
+// Role constants (must match DB)
+const ROLE_PEER_MENTOR = 2;
+const ROLE_PROFESSIONAL = 6;
+const ROLE_ADMIN = 7;
+
+/**
+ * Resolve the custom `users.id` from the auth user.
+ * Seeded users have hardcoded UUIDs that differ from auth.uid(),
+ * so we look up by email as a fallback.
+ */
+async function resolveUserId(supabase: any, authUser: any): Promise<string> {
+  // Try direct ID match first
+  const { data: byId } = await supabase
+    .from("users")
+    .select("id")
+    .eq("id", authUser.id)
+    .maybeSingle();
+
+  if (byId) return byId.id;
+
+  // Fallback: match by email (for seeded users)
+  if (authUser.email) {
+    const { data: byEmail } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", authUser.email)
+      .maybeSingle();
+
+    if (byEmail) return byEmail.id;
+  }
+
+  // Last resort: use auth ID directly
+  return authUser.id;
+}
 
 export default async function IssuePage({
   params,
@@ -25,22 +60,41 @@ export default async function IssuePage({
     notFound();
   }
 
-  // Check if current user is an admin (role_id = 7)
+  // Check if current user is an admin or mentor
   let isAdmin = false;
+  let isMentor = false;
+
   if (user) {
+    // Resolve the custom users table ID (may differ from auth.uid() for seeded data)
+    const resolvedUserId = await resolveUserId(supabase, user);
+
     const { data: roles } = await supabase
       .from("user_roles")
       .select("role_id")
-      .eq("user_id", user.id)
+      .eq("user_id", resolvedUserId)
       .eq("is_active", true);
-    
-    if (roles && roles.some(r => r.role_id === 7)) {
-      isAdmin = true;
+
+    if (roles && roles.length > 0) {
+      const roleIds = roles.map((r: any) => Number(r.role_id));
+      isAdmin = roleIds.includes(ROLE_ADMIN);
+      isMentor = roleIds.some((id: number) => id >= ROLE_PEER_MENTOR && id <= ROLE_PROFESSIONAL);
     }
   }
 
   const isCreator = user?.id === issue.creator_id;
-  const canResolve = isAdmin && issue.status !== "resolved" && issue.status !== "closed";
+  // Admins, mentors, and the issue creator can resolve open issues
+  const canResolve = (isAdmin || isMentor || isCreator) && issue.status !== "resolved" && issue.status !== "closed";
+
+  // Fetch creator name for non-anonymous issues
+  let creatorName: string | null = null;
+  if (!issue.is_anonymous && issue.creator_id) {
+    const { data: creatorProfile } = await supabase
+      .from("user_profiles")
+      .select("full_name")
+      .eq("user_id", issue.creator_id)
+      .maybeSingle();
+    creatorName = creatorProfile?.full_name ?? null;
+  }
 
   // Fetch resolution if resolved
   let resolution = null;
@@ -80,6 +134,18 @@ export default async function IssuePage({
           <Badge variant="outline" className="capitalize">
             {issue.visibility.replace("_", "-")}
           </Badge>
+          {issue.is_anonymous ? (
+            <span className="inline-flex items-center gap-1">
+              <EyeOff className="h-3.5 w-3.5" />
+              Anonymous
+            </span>
+          ) : creatorName ? (
+            <span className="inline-flex items-center gap-1">
+              <User className="h-3.5 w-3.5" />
+              {creatorName}
+            </span>
+          ) : null}
+          <span>·</span>
           <span>Opened on {new Date(issue.created_at).toLocaleDateString()}</span>
         </div>
 

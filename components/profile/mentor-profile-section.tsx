@@ -144,7 +144,7 @@ function AvailabilityToggle({ initialValue }: { initialValue: boolean }) {
 
 // ─── Editable Mentoring Domains ────────────────────────────────────────────────
 function MentoringDomainsEditor({ initialDomains }: { initialDomains: string[] }) {
-  const [domains, setDomains] = useState<string[]>(initialDomains);
+  const [domains, setDomains] = useState<string[]>(initialDomains || []);
   const [inputValue, setInputValue] = useState("");
   const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "saved" | "error">("idle");

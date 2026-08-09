@@ -32,7 +32,7 @@ export default async function IssuesPage(props: {
 
   let query = supabase
     .from("issues")
-    .select("id, title, description, status, created_at, visibility, issue_categories(name), score, issue_comments(count)");
+    .select("id, title, description, status, created_at, visibility, is_anonymous, creator_id, issue_categories(name), score, issue_comments(count)");
 
   // State filter (open/closed)
   if (state === "closed") {
@@ -66,6 +66,27 @@ export default async function IssuesPage(props: {
   const filteredIssues = category && category !== "all"
     ? (issues ?? []).filter(issue => issue.issue_categories !== null)
     : (issues ?? []);
+
+  // Fetch creator names for non-anonymous issues
+  const creatorIds = Array.from(
+    new Set(
+      filteredIssues
+        .filter(i => !i.is_anonymous && i.creator_id)
+        .map(i => i.creator_id)
+    )
+  );
+  const creatorNameMap: Record<string, string> = {};
+  if (creatorIds.length > 0) {
+    const { data: profiles } = await supabase
+      .from("user_profiles")
+      .select("user_id, full_name")
+      .in("user_id", creatorIds);
+    if (profiles) {
+      profiles.forEach((p: any) => {
+        creatorNameMap[p.user_id] = p.full_name;
+      });
+    }
+  }
 
   const userVotes: Record<string, 1 | -1> = {};
   if (user && filteredIssues.length > 0) {
@@ -157,7 +178,11 @@ export default async function IssuesPage(props: {
                 issue={{ 
                   ...issue, 
                   issue_categories: cat, 
-                  userVote: userVotes[issue.id] || null 
+                  userVote: userVotes[issue.id] || null,
+                  is_anonymous: issue.is_anonymous ?? false,
+                  creator_name: issue.is_anonymous
+                    ? null
+                    : creatorNameMap[issue.creator_id] ?? null,
                 } as any} 
               />
             );

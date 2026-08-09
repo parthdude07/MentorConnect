@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { IssueVoteControls } from "./IssueVoteControls";
+import { User, EyeOff } from "lucide-react";
 
 export interface Issue {
   id: string;
@@ -19,6 +20,8 @@ export interface Issue {
   score: number;
   userVote: 1 | -1 | null;
   issue_comments?: { count: number }[] | { count: number };
+  is_anonymous?: boolean;
+  creator_name?: string | null;
 }
 
 export function IssueCard({ issue }: { issue: Issue }) {
@@ -66,8 +69,20 @@ export function IssueCard({ issue }: { issue: Issue }) {
             </span>
           </div>
         </div>
-        <div className="text-xs text-muted-foreground mt-2">
-          Created on {new Date(issue.created_at).toLocaleDateString()}
+        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-2">
+          {issue.is_anonymous ? (
+            <span className="inline-flex items-center gap-1">
+              <EyeOff className="h-3 w-3" />
+              Anonymous
+            </span>
+          ) : issue.creator_name ? (
+            <span className="inline-flex items-center gap-1">
+              <User className="h-3 w-3" />
+              {issue.creator_name}
+            </span>
+          ) : null}
+          <span>·</span>
+          <span>Created on {new Date(issue.created_at).toLocaleDateString()}</span>
         </div>
       </CardHeader>
     </Card>

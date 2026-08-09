@@ -22,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { EyeOff } from "lucide-react";
 
 export function IssueForm() {
   const router = useRouter();
@@ -31,6 +33,7 @@ export function IssueForm() {
 
   const [issueType, setIssueType] = useState("Academic");
   const [visibility, setVisibility] = useState("public");
+  const [isAnonymous, setIsAnonymous] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -93,6 +96,7 @@ export function IssueForm() {
       status: "open",
       visibility,
       category_id: categoryId,
+      is_anonymous: isAnonymous,
     });
 
     if (insertError) {
@@ -169,6 +173,28 @@ export function IssueForm() {
                 {visibility === 'ultra_private' && "Only the Counselling Head can see this. Highest privacy."}
               </p>
             </div>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border p-4">
+            <div className="flex items-center gap-3">
+              <EyeOff className="h-4 w-4 text-muted-foreground" />
+              <div>
+                <Label htmlFor="anonymous" className="text-sm font-medium cursor-pointer">
+                  Submit Anonymously
+                </Label>
+                <p className="text-[10px] text-muted-foreground mt-0.5">
+                  {isAnonymous
+                    ? "Your name will be hidden from everyone."
+                    : "Your name will be visible on this issue."}
+                </p>
+              </div>
+            </div>
+            <Switch
+              id="anonymous"
+              checked={isAnonymous}
+              onCheckedChange={setIsAnonymous}
+              disabled={loading}
+            />
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-2 mt-4">
