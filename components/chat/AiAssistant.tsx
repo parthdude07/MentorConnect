@@ -75,7 +75,7 @@ export function AiAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 w-96 h-[32rem] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-100"
+            className="fixed bottom-6 right-6 w-96 h-[32rem] bg-card rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 border border-border"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white flex justify-between items-center shadow-md">
@@ -95,9 +95,9 @@ export function AiAssistant() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-muted/50">
               {chat.messages.length === 0 && (
-                <div className="text-center text-gray-400 mt-10">
+                <div className="text-center text-muted-foreground mt-10">
                   <Bot size={48} className="mx-auto mb-2 opacity-50" />
                   <p>Hi! I&apos;m your AI Assistant.</p>
                   <p className="text-sm">How can I help you today?</p>
@@ -113,7 +113,7 @@ export function AiAssistant() {
                     className={`max-w-[85%] rounded-2xl p-3 shadow-sm ${
                       m.role === "user"
                         ? "bg-blue-600 text-white rounded-br-sm"
-                        : "bg-white text-gray-800 border border-gray-100 rounded-bl-sm"
+                        : "bg-card text-foreground border border-border rounded-bl-sm"
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1 opacity-70 text-xs font-medium">
@@ -128,7 +128,7 @@ export function AiAssistant() {
                         {getMessageText(m)}
                       </div>
                     ) : (
-                      <div className="prose prose-sm max-w-none text-gray-800 [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-base [&_h1]:font-bold [&_h1]:my-1.5 [&_h2]:text-sm [&_h2]:font-bold [&_h2]:my-1 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:my-1 [&_code]:bg-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_pre]:bg-gray-100 [&_pre]:p-2 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:text-xs [&_a]:text-blue-600 [&_a]:underline [&_strong]:font-semibold [&_blockquote]:border-l-2 [&_blockquote]:border-blue-300 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:my-1">
+                      <div className="prose prose-sm max-w-none text-foreground [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-base [&_h1]:font-bold [&_h1]:my-1.5 [&_h2]:text-sm [&_h2]:font-bold [&_h2]:my-1 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:my-1 [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_pre]:bg-muted [&_pre]:p-2 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:text-xs [&_a]:text-primary [&_a]:underline [&_strong]:font-semibold [&_blockquote]:border-l-2 [&_blockquote]:border-primary/30 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:my-1">
                         <ReactMarkdown>{getMessageText(m)}</ReactMarkdown>
                       </div>
                     )}
@@ -138,7 +138,7 @@ export function AiAssistant() {
               
               {isBusy && (
                 <div className="flex justify-start">
-                  <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm rounded-bl-sm flex items-center gap-2">
+                  <div className="bg-card border border-border rounded-2xl p-4 shadow-sm rounded-bl-sm flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" />
                     <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
                     <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
@@ -149,14 +149,14 @@ export function AiAssistant() {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={onSubmit} className="p-3 bg-white border-t border-gray-100">
+            <form onSubmit={onSubmit} className="p-3 bg-card border-t border-border">
               <div className="relative flex items-center">
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Type your message..."
-                  className="w-full pl-4 pr-12 py-3 bg-gray-50 border-none rounded-full focus:ring-2 focus:ring-blue-100 focus:outline-none text-sm transition-shadow"
+                  className="w-full pl-4 pr-12 py-3 bg-muted border-none rounded-full focus:ring-2 focus:ring-primary/20 focus:outline-none text-sm transition-shadow"
                   disabled={isBusy}
                 />
                 <button

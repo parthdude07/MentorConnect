@@ -438,7 +438,7 @@ export function MentorProfileSection({
       )}
 
       {/* ── Stats Summary ── */}
-      <Card className="bg-gradient-to-br from-primary/5 to-purple-500/5 border-primary/10">
+      <Card className="bg-gradient-to-br from-primary/5 to-blue-500/5 border-primary/10">
         <CardContent className="pt-4">
           <div className="grid grid-cols-3 divide-x divide-border text-center">
             <div className="px-3">

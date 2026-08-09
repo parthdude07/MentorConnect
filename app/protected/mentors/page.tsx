@@ -50,7 +50,7 @@ export default async function MentorsPage() {
 
       {/* Overview Stats */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-primary/10 bg-gradient-to-br from-primary/5 to-purple-500/5">
+        <Card className="border-primary/10 bg-gradient-to-br from-primary/5 to-blue-500/5">
           <CardContent className="pt-4 pb-4 flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <Users className="h-5 w-5 text-primary" />
@@ -72,10 +72,10 @@ export default async function MentorsPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="border-amber-500/10 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
+        <Card className="border-sky-500/10 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
           <CardContent className="pt-4 pb-4 flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-              <Trophy className="h-5 w-5 text-amber-500" />
+            <div className="h-10 w-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
+              <Trophy className="h-5 w-5 text-sky-500" />
             </div>
             <div>
               <p className="text-2xl font-bold text-foreground">{totalIssuesSolved}</p>
@@ -83,10 +83,10 @@ export default async function MentorsPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="border-violet-500/10 bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5">
+        <Card className="border-indigo-500/10 bg-gradient-to-br from-indigo-500/5 to-blue-500/5">
           <CardContent className="pt-4 pb-4 flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-violet-500/10 flex items-center justify-center">
-              <Star className="h-5 w-5 text-violet-500" />
+            <div className="h-10 w-10 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+              <Star className="h-5 w-5 text-indigo-500" />
             </div>
             <div>
               <p className="text-2xl font-bold text-foreground">{avgRatingAll}</p>

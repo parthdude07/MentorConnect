@@ -20,12 +20,12 @@ interface MentorCardProps {
 }
 
 const gradients = [
-  "from-indigo-500 via-purple-500 to-pink-500",
-  "from-emerald-500 via-teal-500 to-cyan-500",
-  "from-orange-500 via-rose-500 to-pink-500",
-  "from-blue-500 via-indigo-500 to-violet-500",
-  "from-fuchsia-500 via-pink-500 to-rose-500",
-  "from-teal-500 via-cyan-500 to-sky-500",
+  "from-blue-600 via-blue-500 to-sky-400",
+  "from-sky-500 via-cyan-500 to-blue-400",
+  "from-indigo-500 via-blue-500 to-sky-500",
+  "from-blue-500 via-indigo-500 to-blue-600",
+  "from-sky-600 via-blue-500 to-indigo-500",
+  "from-cyan-500 via-sky-500 to-blue-500",
 ];
 
 function getInitials(name: string): string {
@@ -176,7 +176,7 @@ export function MentorCard({ mentor, currentUserId, index }: MentorCardProps) {
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1">
-                <Sparkles className="h-3.5 w-3.5 text-purple-500" />
+                <Sparkles className="h-3.5 w-3.5 text-blue-500" />
                 <span className="text-sm font-bold text-foreground">
                   {mentor.activeMentees}
                 </span>
