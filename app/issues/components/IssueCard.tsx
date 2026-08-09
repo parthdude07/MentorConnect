@@ -36,7 +36,14 @@ export function IssueCard({ issue }: { issue: Issue }) {
               {issue.title}
             </Link>
           </CardTitle>
-          <Badge variant={issue.status === "closed" || issue.status === "resolved" ? "secondary" : "default"} className="pointer-events-auto">
+          <Badge 
+            variant="outline" 
+            className={`pointer-events-auto border-transparent ${
+              issue.status === "closed" || issue.status === "resolved" 
+                ? "bg-secondary text-secondary-foreground" 
+                : "bg-blue-100 text-black hover:bg-blue-100 dark:bg-blue-900/40 dark:text-white dark:hover:bg-blue-900/40"
+            }`}
+          >
             {statusLabel}
           </Badge>
         </div>

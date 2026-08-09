@@ -61,7 +61,14 @@ export default async function IssuePage({
         <div className="flex items-center justify-between">
           <h1 className="font-mono text-2xl font-semibold tracking-tight">{issue.title}</h1>
           <div className="flex items-center gap-2">
-            <Badge variant={issue.status === "closed" || issue.status === "resolved" ? "secondary" : "default"}>
+            <Badge 
+              variant="outline" 
+              className={`border-transparent ${
+                issue.status === "closed" || issue.status === "resolved" 
+                  ? "bg-secondary text-secondary-foreground" 
+                  : "bg-blue-100 text-black hover:bg-blue-100 dark:bg-blue-900/40 dark:text-white dark:hover:bg-blue-900/40"
+              }`}
+            >
               {statusLabel}
             </Badge>
             {canResolve && <ResolveIssueDialog issueId={issueId} />}
