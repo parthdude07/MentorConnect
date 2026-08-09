@@ -56,11 +56,11 @@ const statusColors: Record<string, string> = {
 };
 
 const roleGradients: Record<string, string> = {
-  mentor: "from-indigo-500 via-purple-500 to-pink-500",
-  professional: "from-teal-500 via-emerald-500 to-cyan-500",
-  mentee: "from-orange-500 via-pink-500 to-rose-500",
+  mentor: "from-blue-600 via-blue-500 to-sky-400",
+  professional: "from-blue-700 via-blue-600 to-indigo-500",
+  mentee: "from-sky-500 via-blue-500 to-indigo-500",
   admin: "from-slate-600 via-slate-500 to-slate-400",
-  default: "from-purple-500 to-pink-500",
+  default: "from-blue-600 to-sky-500",
 };
 
 export default async function ProfilePage() {

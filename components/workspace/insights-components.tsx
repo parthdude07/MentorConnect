@@ -12,7 +12,7 @@ export function InsightsMetricCard({
   delta: string;
 }) {
   return (
-    <Card>
+    <Card className="border-blue-100 dark:border-blue-900/30 overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="font-mono text-xs text-muted-foreground">{title}</CardTitle>
       </CardHeader>

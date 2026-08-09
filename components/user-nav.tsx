@@ -34,7 +34,7 @@ export function UserNav({ email }: { email: string }) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-9 w-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-xs p-0"
+          className="relative h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white font-semibold text-xs p-0"
         >
           {initials}
         </Button>

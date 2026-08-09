@@ -45,7 +45,7 @@ interface MenteeProfileSectionProps {
 const commPrefConfig = {
   chat: { icon: MessageCircle, label: "Chat", color: "text-blue-500", bg: "bg-blue-500/10 border-blue-500/20" },
   call: { icon: Phone, label: "Call", color: "text-green-500", bg: "bg-green-500/10 border-green-500/20" },
-  both: { icon: Layers, label: "Chat & Call", color: "text-purple-500", bg: "bg-purple-500/10 border-purple-500/20" },
+  both: { icon: Layers, label: "Chat & Call", color: "text-blue-500", bg: "bg-blue-500/10 border-blue-500/20" },
 };
 
 function CommPrefSelector({ initialPref }: { initialPref: "chat" | "call" | "both" }) {
@@ -163,7 +163,7 @@ export function MenteeProfileSection({
     <div className="space-y-4">
       {/* Assigned Mentor Card */}
       {assignedMentor ? (
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-purple-500/5">
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-blue-500/5">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2 text-primary">
               <Users className="h-4 w-4" />
@@ -172,7 +172,7 @@ export function MenteeProfileSection({
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                 {assignedMentor.name.slice(0, 2).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
@@ -244,7 +244,7 @@ export function MenteeProfileSection({
                 <Badge
                   key={idx}
                   variant="outline"
-                  className="rounded-full px-3 py-1 text-xs font-medium bg-orange-500/10 border-orange-500/20 text-orange-600 dark:text-orange-400"
+                  className="rounded-full px-3 py-1 text-xs font-medium bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400"
                 >
                   {challenge}
                 </Badge>
@@ -285,15 +285,15 @@ export function MenteeProfileSection({
       )}
 
       {/* Mentee Quick Stats */}
-      <Card className="bg-gradient-to-br from-orange-500/5 to-pink-500/5 border-orange-500/10">
+      <Card className="bg-gradient-to-br from-blue-500/5 to-sky-500/5 border-blue-500/10">
         <CardContent className="pt-4">
           <div className="grid grid-cols-2 divide-x divide-border text-center">
             <div className="px-3">
-              <p className="text-2xl font-bold text-orange-500">{challenges.length}</p>
+              <p className="text-2xl font-bold text-blue-500">{challenges.length}</p>
               <p className="text-xs text-muted-foreground mt-0.5">Active Challenges</p>
             </div>
             <div className="px-3">
-              <p className="text-2xl font-bold text-orange-500">
+              <p className="text-2xl font-bold text-blue-500">
                 {assignedMentor ? "✓" : "–"}
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">Mentor Assigned</p>
