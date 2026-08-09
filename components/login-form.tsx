@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidIIITDMJEmail } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,11 +27,17 @@ export function LoginForm({
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
-
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
+
+    if (!isValidIIITDMJEmail(email)) {
+      setError("Only people belonging to IIITDM Jabalpur are permitted to log in.");
+      setIsLoading(false);
+      return;
+    }
+
+    const supabase = createClient();
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -47,6 +53,7 @@ export function LoginForm({
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

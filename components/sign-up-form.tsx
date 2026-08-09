@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidIIITDMJEmail } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,15 +30,23 @@ export function SignUpForm({
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
+
+    if (!isValidIIITDMJEmail(email)) {
+      setError("Only people belonging to IIITDM Jabalpur are permitted to register.");
+      setIsLoading(false);
+      return;
+    }
 
     if (password !== repeatPassword) {
       setError("Passwords do not match");
       setIsLoading(false);
       return;
     }
+
+    const supabase = createClient();
+
 
     try {
       const { error } = await supabase.auth.signUp({
