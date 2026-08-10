@@ -37,6 +37,7 @@ type AppShellProps = {
   children: React.ReactNode;
   userEmail?: string;
   showAdmin?: boolean;
+  isMentee?: boolean;
 };
 
 type NavItem = {
@@ -67,16 +68,22 @@ const aiQuickActions = [
 function SidebarNav({
   pathname,
   showAdmin,
+  isMentee,
   onNavigate,
 }: {
   pathname: string;
   showAdmin: boolean;
+  isMentee: boolean;
   onNavigate?: () => void;
 }) {
   return (
     <nav className="space-y-1 p-3" aria-label="Sidebar Navigation">
       {navItems
-        .filter((item) => !item.adminOnly || showAdmin)
+        .filter((item) => {
+          if (item.adminOnly && !showAdmin) return false;
+          if (item.label === "Tasks" && isMentee) return false;
+          return true;
+        })
         .map((item) => {
           const active =
             pathname === item.href ||
@@ -168,7 +175,7 @@ function ProfileMenu({ userEmail }: { userEmail?: string }) {
   );
 }
 
-export function AppShell({ children, userEmail, showAdmin = true }: AppShellProps) {
+export function AppShell({ children, userEmail, showAdmin = true, isMentee = false }: AppShellProps) {
   const pathname = usePathname();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -219,7 +226,7 @@ export function AppShell({ children, userEmail, showAdmin = true }: AppShellProp
 
       <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[240px_minmax(0,1fr)_300px]">
         <aside className="hidden border-r border-blue-100 bg-gradient-to-b from-blue-50/80 to-transparent dark:from-blue-950/30 dark:border-blue-900/30 lg:block">
-          <SidebarNav pathname={pathname} showAdmin={showAdmin} />
+          <SidebarNav pathname={pathname} showAdmin={showAdmin} isMentee={isMentee} />
         </aside>
 
         {mobileSidebarOpen ? (
@@ -231,6 +238,7 @@ export function AppShell({ children, userEmail, showAdmin = true }: AppShellProp
               <SidebarNav
                 pathname={pathname}
                 showAdmin={showAdmin}
+                isMentee={isMentee}
                 onNavigate={() => setMobileSidebarOpen(false)}
               />
             </aside>

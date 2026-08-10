@@ -18,17 +18,19 @@ export default async function ProfileLayout({
     redirect("/auth/login");
   }
 
-  // Only show the Admin Panel sidebar link if the user actually has admin role
-  const { data: adminRole } = await supabase
+  // Fetch active user role
+  const { data: userRole } = await supabase
     .from("user_roles")
     .select("role_id")
     .eq("user_id", user.id)
-    .eq("role_id", HIGHEST_ADMIN_ROLE_ID)
     .eq("is_active", true)
     .maybeSingle();
 
+  const isMentee = userRole?.role_id === 1;
+  const showAdmin = userRole?.role_id === 7;
+
   return (
-    <AppShell userEmail={user.email} showAdmin={Boolean(adminRole)}>
+    <AppShell userEmail={user.email} showAdmin={showAdmin} isMentee={isMentee}>
       {children}
     </AppShell>
   );
