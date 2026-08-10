@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -185,7 +186,14 @@ export function AppShell({ children, userEmail, showAdmin = true }: AppShellProp
             {mobileSidebarOpen ? <X className="h-4 w-4 text-white" /> : <Menu className="h-4 w-4 text-white" />}
           </Button>
 
-          <Link href="/protected" className="font-mono text-sm font-semibold tracking-tight text-white">
+          <Link href="/protected" className="font-mono text-sm font-semibold tracking-tight text-white flex items-center gap-2">
+            <Image 
+              src="/icon.png" 
+              alt="CounselConnect Logo" 
+              width={24} 
+              height={24} 
+              className="rounded-md object-contain bg-white/10"
+            />
             CounselConnect
           </Link>
 

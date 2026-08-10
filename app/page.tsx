@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { AuthButton } from "@/components/auth-button";
@@ -21,8 +22,16 @@ export default async function Home() {
         <nav className="w-full flex justify-center bg-gradient-to-r from-blue-700 to-blue-500 shadow-md h-16 dark:from-blue-950 dark:to-slate-900">
           <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
             <div className="flex gap-5 items-center font-semibold">
-              <Link href="/" className="text-white hover:text-blue-100 transition-colors">
-                CounselConnect
+              <Link href="/" className="flex items-center gap-2 text-white hover:text-blue-100 transition-colors">
+                {/* 2. Add your icon.png logo here */}
+                <Image 
+                  src="/icon.png" 
+                  alt="CounselConnect Logo" 
+                  width={28} 
+                  height={28} 
+                  className="rounded-md object-contain"
+                />
+                <span>CounselConnect</span>
               </Link>
             </div>
             <Suspense>
